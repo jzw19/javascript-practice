@@ -1,0 +1,84 @@
+<body>
+  <div id="container">
+  
+  </div>
+  <script>
+  	function initializeCalendar(elem) {
+    	const table = document.createElement('table');
+      const tbody = document.createElement('tbody');
+      const tableRow = document.createElement('tr');
+     	for(let i = 0; i < 7; i++) {
+      	tableRow.appendChild(document.createElement('td'));
+      }
+      
+      tableRow.children[0].append('MO');
+      tableRow.children[1].innerHTML = 'TU';
+      tableRow.children[2].innerHTML = 'WE';
+      tableRow.children[3].innerHTML = 'TH';
+      tableRow.children[4].innerHTML = 'FR';
+      tableRow.children[5].innerHTML = 'SA';
+      tableRow.children[6].innerHTML = 'SU';
+      
+      tbody.appendChild(tableRow);
+      table.appendChild(tbody);
+      table.style.borderCollapse = 'collapse';
+      return table;
+    }
+    
+    function fillFirstCalendarRow(table, specifiedDate) {
+    	const dayOfWeek = (specifiedDate.getDay() + 6) % 7;
+      const tr = document.createElement('tr');
+      const tbody = table.querySelector('tbody');
+      for(let i = 0; i < dayOfWeek; i++) {
+      	tr.append(document.createElement('td'));
+      }
+      
+      let dayCount = 1;
+      for(let i = dayOfWeek; i < 7; i++) {
+      	const daySquare = document.createElement('td');
+        daySquare.innerHTML = dayCount;
+        dayCount++;
+      	tr.append(daySquare);
+      }
+      
+      tbody.append(tr);
+      return dayCount;
+    }
+    
+    function fillRemainingCalendarRows(table, nextDayOfMonth, daysInMonth) {
+    	const tr = document.createElement('tr');
+    	for(let i = 0; i < 7; i++) {
+      	const daySquare = document.createElement('td');
+      	if(nextDayOfMonth <= daysInMonth) {
+        	daySquare.innerHTML = nextDayOfMonth;
+        }
+        tr.append(daySquare);
+        nextDayOfMonth++;
+      }
+      table.querySelector('tbody').append(tr);
+      return nextDayOfMonth;
+    }
+    
+  	function createCalendar(elem, year, month) {
+    	const table = initializeCalendar(elem);
+      const specifiedDate = new Date(year, month - 1, 1);
+      const daysInMonth = new Date(year, month, 0).getDate();
+      let nextDayOfMonth = fillFirstCalendarRow(table, specifiedDate);
+      while(nextDayOfMonth <= daysInMonth) {
+        nextDayOfMonth = fillRemainingCalendarRows(table, nextDayOfMonth, daysInMonth);
+      }
+      
+      for(const tableRow of table.children[0].children) {
+      	for(const td of tableRow.children) {
+          td.style.border = '1px solid black';
+          td.style.fontWeight = 'bold';
+          td.style.padding = '4px';
+        }
+      }
+      
+      elem.append(table);
+    }
+    
+    createCalendar(container, 2012, 9);
+  </script>
+</body>
