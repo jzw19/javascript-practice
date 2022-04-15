@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    .closedMenuIcon, .openMenuIcon {
+      display: inline;
+    }
+    .closedMenuIcon {
+      position: absolute;
+      top: 6px;
+      left: 12px;
+      visibility: '';
+    }
+    .openMenuIcon {
+      position: relative;
+    }
+    .menuToggle:hover {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="menuToggle" role="button">
+    <div class="closedMenuIcon">▶</div>
+    <div class="openMenuIcon">▼</div>
+    <span>Sweeties (click me)!</span>
+  </div>
+  <div class="menuItems">
+    <ul>
+      <li>Cake</li>
+      <li>Donut</li>
+      <li>Honey</li>
+    </ul>
+  </div>
+  <script>
+    const openMenuIcon = document.querySelector('.openMenuIcon');
+    const closedMenuIcon = document.querySelector('.closedMenuIcon');
+    const menuToggle = document.querySelector('.menuToggle');
+    const menuItems = document.querySelector('.menuItems');
+    openMenuIcon.style.visibility = 'hidden';
+    menuItems.style.visibility = 'hidden';
+
+    function toggleMenu() {
+      menuItems.style.visibility = menuItems.style.visibility === 'hidden' ? '' : 'hidden';
+      closedMenuIcon.style.visibility = closedMenuIcon.style.visibility === 'hidden' ? '' : 'hidden';
+      openMenuIcon.style.visibility = openMenuIcon.style.visibility === 'hidden' ? '' : 'hidden';
+    }
+
+    menuToggle.onclick = toggleMenu;
+  </script>
+</body>
+</html>
